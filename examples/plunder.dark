@@ -1,0 +1,68 @@
+from std use audio
+
+class wave {
+    pub type Wave = vec int
+
+    empty : return Wave
+    empty = vec 0
+
+    //todo
+    pub fromWav : str -> return Wave
+    fromWav fileName = { empty }
+
+    //todo
+    pub fromMp3 : str -> return Wave
+    fromMp3 fileName = { empty }
+
+    //todo
+    pub toWav : Wave -> str
+    toWav wave fileName = "todo"
+}
+
+class plunder {
+    from this use wave
+    use wave::Wave
+
+    type Synths map str (int -> int)
+    
+    addSynth : Synths -> str -> (int -> int)
+    addSynth synths name formula = {
+        mapIns synths name formula
+    }
+    
+    
+    type clips = map str struct wave
+    
+    addClips : Clips -> str -> (clipCons -> wave::Wave)
+    addClip clips name getClip = {
+        let wave = getClip struct {
+            wav: wave::fromWav;
+            mp3: wave::fromMp3;
+        }
+        mapIns clips wave
+    }
+    
+    pub play : Wave
+    play = {
+        audio::playWave wave
+    }
+
+
+    type PlunderConf = struct {
+        tempo: int;
+        bitrate: int;
+        synth: str -> (int -> int);
+        clip: str -> (clipCons -> wave::Wave);
+        play: wave::Wave;
+    }
+
+    pub plunder : (plunderConf -> wave::Wave)
+    plunder song = {
+        let synths struct {} : Synths
+        let clips struct {} : Clips
+        let wave = song struct {
+            pub synth: addSynth synths;
+            pub clip: addClip clips;
+        }
+    }
+}

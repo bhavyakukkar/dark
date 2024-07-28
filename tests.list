@@ -1,0 +1,2 @@
+cargo run -q -- lex tests/lex/floats.dark 2>/dev/null
+cargo run -q -- lex tests/lex/character.dark 2>/dev/null
